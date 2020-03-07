@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>部门调动</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="../layui/css/layui.css"  media="all">
+    <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
+</head>
+<body>
+<form class="layui-form form-box" id="div" action="http://101.200.193.98:8080/wagesAdd" style="display: none">
+    <div class="layui-form-item" style="margin-top: 30px">
+        <div style="margin-top: 20px;margin-left: 30px;margin-right: 30px">
+            <input  class="layui-input" placeholder="员工ID" name="id">
+        </div>
+        <div style="margin-top: 20px;margin-left: 30px;margin-right: 30px">
+            <input  class="layui-input" placeholder="员工姓名" name="name">
+        </div>
+        <div style="margin-top: 20px;margin-left: 30px;margin-right: 30px">
+            <input  class="layui-input" placeholder="基本工资" name="basicWage">
+        </div>
+        <div style="margin-top: 20px">
+            <label class="layui-form-label">奖惩事项</label>
+            <div class="layui-input-block" style="width: 190px">
+                <select name="matters" lay-filter="aihao">
+                    <option value=""selected=""></option>
+                    <option value="迟到">迟到</option>
+                    <option value="早退" >早退</option>
+                    <option value="旷工">旷工</option>
+                    <option value="项目未完成">项目未完成</option>
+                    <option value="完成项目">完成项目</option>
+                    <option value="全勤">全勤</option>
+                    <option value="加班">加班</option>
+                </select>
+            </div>
+        </div>
+        <div style="margin-top: 20px;margin-left: 30px;margin-right: 30px">
+            <input  class="layui-input" placeholder="奖惩详细" name="detailed">
+        </div>
+        <div style="margin-top: 20px;margin-left: 30px;margin-right: 30px">
+            <input  class="layui-input" placeholder="相关操作" name="operation">
+        </div>
+        <div style="margin-top: 20px;margin-left: 30px;margin-right: 30px">
+            <input  class="layui-input" placeholder="最终工资" name="finalWage">
+        </div>
+        <div style="margin-top: 20px;margin-left: 150px;margin-bottom: 30px">
+            <button class="layui-btn" type="submit">确认提交</button>
+        </div>
+    </div>
+</form>
+<table class="layui-hide" id="test" lay-filter="test"></table>
+
+<script type="text/html" id="toolbarDemo">
+    <div class="layui-btn-container">
+        <button class="layui-btn layui-btn-sm" lay-event="add">新增工资事务</button>
+    </div>
+</script>
+<script src="../layui/layui.js" charset="utf-8"></script>
+<script>
+    layui.use(['form','element','table','jquery','layer'], function() {
+        var $ = layui.jquery;
+        var layer = layui.layer;
+        var table = layui.table;
+        table.render({
+            elem: '#test'
+            , url: 'http://101.200.193.98:8080/wagesQueue'
+            , toolbar: '#toolbarDemo'
+            , title: '用户数据表'
+            , totalRow: true
+            , cols: [[
+                {type: 'checkbox', fixed: 'left'}
+                , {field: 'id', title: 'ID', width: 80, fixed: 'left'}
+                , {field: 'name', title: '名字', width: 80}
+                , {field: 'basicWage', title: '基本工资', width: 100}
+                , {field: 'matters', title: '奖惩事项', width: 100}
+                , {field: 'detailed', title: '奖惩详细'}
+                , {field: 'operation', title: '具体操作', width: 180}
+                , {field: 'finalWage', title: '最终工资', width: 180}
+                , {field: 'time', title: '时间'}
+            ]]
+            , page: true
+        });
+
+    //工具栏事件
+    table.on('toolbar(test)', function(obj){
+        var checkStatus = table.checkStatus(obj.config.id);
+        switch(obj.event){
+            case 'add':
+                layer.open({
+                    type: 1,
+                    title: '部门调整',
+                    area: ['400px', ''],
+                    content: $('#div')
+                })
+        };
+        });
+    });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>员工信息改动表</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="../layui/css/layui.css"  media="all">
+    <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
+</head>
+<body>
+<table class="layui-hide" id="test" lay-filter="test"></table>
+
+<script src="../layui/layui.js" charset="utf-8"></script>
+<script>
+    layui.use(['form','element','table','jquery','layer'], function() {
+        var $ = layui.jquery;
+        var layer = layui.layer;
+        var table = layui.table;
+        table.render({
+            elem: '#test'
+            , url: 'http://101.200.193.98:8080/movequeue'
+            , toolbar: '#toolbarDemo'
+            , title: '员工信息改动表'
+            , totalRow: true
+            , cols: [[
+                {type: 'checkbox', fixed: 'left'}
+                // , {field: 'tip', title: '事务', width: 80, fixed: 'left'}
+                , {field: 'id', title: 'ID', width: 80, fixed: 'left'}
+                , {field: 'name', title: '名字', width: 80}
+                , {field: 'oldDepartment', title: '以前的部门', width: 100}
+                , {field: 'newDepartment', title: '现在的部门', width: 100}
+                , {field: 'because', title: '部门调整原因'}
+                , {field: 'time', title: '部门调整时间', width: 300}
+            ]]
+            , page: true
+        });
+    })
+</script>
+
+</body>
+</html>
